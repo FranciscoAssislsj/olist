@@ -24,6 +24,9 @@ coverage.xml
 # Documentação gerada (mkdocs build)
 site/
 
+# MkDocs (saída do build)
+site/
+
 # Lint
 .ruff_cache/
 
