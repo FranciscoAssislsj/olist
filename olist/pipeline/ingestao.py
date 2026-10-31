@@ -1,7 +1,7 @@
-"""Ingestão: os nove .csv.gz da Olist entram no schema raw do olist.duckdb.
+"""Ingestão: os nove .csv.gz da Olist entram no schema raw do data/olist.duckdb.
 
 Execução:
-    uv run python -m pipeline.ingestao
+    uv run python -m olist.pipeline.ingestao
 
 SPEC (e por que cada regra existe)
 
@@ -49,7 +49,7 @@ SPEC (e por que cada regra existe)
    Por quê: oito de nove tabelas ingeridas em silêncio produzem um dashboard
    errado que parece certo.
 
-Separação: este módulo não importa ui.py, não sobe servidor, não abre
+Separação: este módulo não importa olist/ui.py, não sobe servidor, não abre
 navegador e não depende da extensão ui do DuckDB.
 """
 
@@ -57,7 +57,8 @@ import sys
 
 import pandas as pd
 
-from pipeline.db import PASTA_RAW, conectar, criar_schema, gravar
+from olist.config import PASTA_RAW
+from olist.pipeline.db import conectar, criar_schema, gravar
 
 SCHEMA = "raw"
 

@@ -8,8 +8,8 @@ from decimal import Decimal
 import duckdb
 import pytest
 
-from pipeline import db, marts
-from pipeline.transformacao import MAPA
+from olist.pipeline import db, marts
+from olist.pipeline.transformacao import MAPA
 
 
 def preparar(tmp_path, monkeypatch, arquivos):
@@ -177,7 +177,7 @@ def test_tabela_faltando_em_refined_encerra(tmp_path, monkeypatch):
     assert fim.value.code == 1
     texto = lido(saida)
     assert "refined.avaliacoes" in texto
-    assert "uv run python -m pipeline.transformacao" in texto
+    assert "uv run python -m olist.pipeline.transformacao" in texto
     assert tabelas_marts(banco) == set()
 
 

@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-from pipeline import db
+from olist.pipeline import db
 
 
 def test_conectar_cria_o_banco_quando_ele_falta(tmp_path, monkeypatch):

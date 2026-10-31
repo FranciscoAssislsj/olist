@@ -5,9 +5,9 @@ O painel tem duas saídas, com as mesmas funções de gráfico:
 | Arquivo | Saída | Comando |
 |---|---|---|
 | `app.py` | Página Streamlit com filtro de período | `uv run streamlit run app.py` |
-| `relatorio.py` | `relatorio.html`, um arquivo só, sem filtro | `uv run python relatorio.py` |
+| `olist/relatorio.py` | `reports/relatorio.html`, um arquivo só, sem filtro | `uv run python -m olist.relatorio` |
 
-`painel.py` concentra a leitura dos marts, a formatação e os gráficos Plotly, e não importa `streamlit`. Por isso o relatório HTML reaproveita as mesmas funções.
+`olist/painel.py` concentra a leitura dos marts, a formatação e os gráficos Plotly, e não importa `streamlit`. Por isso o relatório HTML reaproveita as mesmas funções.
 
 ![Rascunho do layout do painel](assets/rascunho.png)
 
@@ -35,7 +35,7 @@ O painel tem duas saídas, com as mesmas funções de gráfico:
 
 ## O painel não calcula
 
-Em `painel.py` e `app.py` é proibido agrupar, somar, tirar média, contar, juntar tabelas, pivotar ou fazer conta entre colunas. É permitido ordenar, filtrar linhas, `head(n)`, renomear coluna e formatar texto.
+Em `olist/painel.py` e `app.py` é proibido agrupar, somar, tirar média, contar, juntar tabelas, pivotar ou fazer conta entre colunas. É permitido ordenar, filtrar linhas, `head(n)`, renomear coluna e formatar texto.
 
 Número novo na tela exige um `.sql` novo em `sql/marts/`. Se faltar algum número, o que falta é um mart, não uma linha de pandas.
 
@@ -62,6 +62,8 @@ numero(96470)       # "96.470"
 
 A leitura usa `st.cache_data`, e o botão *Recarregar dados* limpa o cache para trazer os marts novos sem reiniciar a página.
 
-Sem o `olist.duckdb`, ou faltando algum mart, a página mostra quais faltam e o comando `uv run python -m pipeline.marts`.
+Sem o `data/olist.duckdb` (por exemplo, no primeiro deploy, já que o banco não vai para o git), o app roda ingestão, transformação e marts uma vez por processo, com `st.cache_resource`. Se a geração falhar, o arquivo pela metade é apagado e a página mostra o erro.
+
+Faltando algum mart, a página mostra quais faltam e o comando `uv run python -m olist.pipeline.marts`.
 
 A conexão é aberta em modo somente leitura e fechada dentro de `ler()`, para o pipeline conseguir gravar com o painel de pé.

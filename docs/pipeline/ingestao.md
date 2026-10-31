@@ -1,10 +1,10 @@
 # 1. Ingestão
 
 ```bash
-uv run python -m pipeline.ingestao
+uv run python -m olist.pipeline.ingestao
 ```
 
-Os nove `.csv.gz` da Olist entram no schema `raw`, com nomes de tabela em português.
+Os nove `.csv.gz` de `data/raw/` entram no schema `raw`, com nomes de tabela em português.
 
 ## Regras
 
@@ -20,4 +20,4 @@ Os nove `.csv.gz` da Olist entram no schema `raw`, com nomes de tabela em portug
 **Os nove arquivos ou nada.** Antes de abrir o banco, confere se todos existem. Faltando qualquer um, lista os que faltam e encerra.
 : Oito de nove tabelas ingeridas em silêncio produzem um dashboard errado que parece certo.
 
-**Separação.** Este módulo não importa o `ui.py`, não sobe servidor e não depende da extensão `ui` do DuckDB.
+**Separação.** Este módulo não importa o `olist/ui.py`, não sobe servidor e não depende da extensão `ui` do DuckDB.

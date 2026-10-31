@@ -1,7 +1,7 @@
 """Marts: cada sql/marts/NN_nome.sql vira a tabela marts.nome.
 
 Execução:
-    uv run python -m pipeline.marts
+    uv run python -m olist.pipeline.marts
 
 SPEC (e por que cada regra existe)
 
@@ -31,7 +31,7 @@ SPEC (e por que cada regra existe)
 
 4. ERRO
    - Antes de tudo: se faltar qualquer uma das oito tabelas em refined,
-     lista quais, diz para rodar "uv run python -m pipeline.transformacao"
+     lista quais, diz para rodar "uv run python -m olist.pipeline.transformacao"
      e encerra com sys.exit(1).
      Por quê: mart sobre refined incompleto sai errado parecendo certo.
    - Se sql/marts/ não tiver nenhum arquivo: avisa e sys.exit(1).
@@ -66,12 +66,12 @@ from pathlib import Path
 
 import duckdb
 
-from pipeline.db import RAIZ, conectar, criar_schema
-from pipeline.transformacao import MAPA, milhar
+from olist.config import PASTA_MARTS, RAIZ
+from olist.pipeline.db import conectar, criar_schema
+from olist.pipeline.transformacao import MAPA, milhar
 
 ORIGEM = "refined"
 DESTINO = "marts"
-PASTA_MARTS = RAIZ / "sql" / "marts"
 
 # Exatamente dois dígitos e um sublinhado, seguidos de pelo menos um caractere.
 PREFIXO = re.compile(r"^\d{2}_(.+)$")
@@ -148,7 +148,7 @@ def main() -> None:
             print(f"Tabelas não encontradas no schema {ORIGEM}:")
             for tabela in faltando:
                 print(f"  {ORIGEM}.{tabela}")
-            print("Rode antes: uv run python -m pipeline.transformacao")
+            print("Rode antes: uv run python -m olist.pipeline.transformacao")
             print("Nada foi gravado.")
             sys.exit(1)
 
