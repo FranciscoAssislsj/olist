@@ -35,4 +35,17 @@ uv run --group docs mkdocs serve
 uv run --group docs mkdocs build --strict
 ```
 
-A cada push na `main`, o workflow `.github/workflows/docs.yml` publica o site no GitHub Pages.
+A cada push na `main`, o job `deploy` do workflow `.github/workflows/ci.yml` publica o site no GitHub Pages (veja [CI](#ci)).
+
+## CI
+
+O workflow `.github/workflows/ci.yml` roda a cada push na `main` ou na `dev` e em todo pull request. `lint`, `test` e `docs` rodam em paralelo; `deploy` só roda num push na `main` e só depois que os outros três passam:
+
+| Job | Faz |
+|---|---|
+| `lint` | `ruff check .` |
+| `test` | `pytest --cov`, com a cobertura mínima de 60%, e publica o `coverage.xml` como artefato |
+| `docs` | `mkdocs build --strict`, para pegar link quebrado antes do merge; na `main`, empacota o `site/` para o Pages |
+| `deploy` | Publica o site no GitHub Pages |
+
+Os jobs de build usam `uv sync --locked`: se o `uv.lock` estiver desatualizado em relação ao `pyproject.toml`, o job falha.

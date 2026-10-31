@@ -73,7 +73,7 @@ A documentação usa [Material for MkDocs](https://squidfunk.github.io/mkdocs-ma
 uv run --group docs mkdocs serve   # http://127.0.0.1:8000
 ```
 
-A cada push na `main`, o workflow `.github/workflows/docs.yml` publica o site no GitHub Pages.
+A cada push na `main`, o job `deploy` do workflow `.github/workflows/ci.yml` publica o site no GitHub Pages, depois que lint, testes e build da documentação passam.
 
 ## Dados
 
