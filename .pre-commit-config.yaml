@@ -1,6 +1,6 @@
 # Hooks rodados a cada `git commit`. Instalação: `uv run pre-commit install`.
 # O ruff e o uv vêm do ambiente do projeto (uv.lock), na mesma versão do CI.
-exclude: ^(raw/|relatorio\.html$)
+exclude: ^(data/raw/|reports/relatorio\.html$)
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks

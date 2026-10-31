@@ -1,12 +1,12 @@
-"""Explorador do olist.duckdb no navegador, pela extensão ui do DuckDB.
+"""Explorador do data/olist.duckdb no navegador, pela extensão ui do DuckDB.
 
 Execução:
-    uv run python ui.py
+    uv run python -m olist.ui
 
 SPEC (e por que cada regra existe)
 
 U1. O QUE FAZ
-    Abre o olist.duckdb da raiz do projeto, roda INSTALL ui; LOAD ui; e
+    Abre o data/olist.duckdb (olist.config), roda INSTALL ui; LOAD ui; e
     CALL start_ui(), que sobe o servidor em http://localhost:4213 e abre o
     navegador.
     Por quê: explorar tabela no navegador é mais rápido que ler no terminal.
@@ -20,13 +20,13 @@ U2. FICA DE PÉ ATÉ CTRL+C
     exatamente como desligar o servidor faz parte da ferramenta.
 
 U3. NÃO CRIA BANCO
-    Se olist.duckdb não existir, avisa que é preciso rodar a ingestão antes e
-    encerra com sys.exit(1). Por isso não usa pipeline.db.conectar(), que
+    Se data/olist.duckdb não existir, avisa que é preciso rodar a ingestão antes e
+    encerra com sys.exit(1). Por isso não usa olist.pipeline.db.conectar(), que
     cria o arquivo quando ele falta.
     Por quê: um banco vazio aberto no navegador parece ingestão quebrada.
 
 U4. SEPARAÇÃO
-    Não importa pipeline.ingestao, e a ingestão não importa este arquivo.
+    Não importa olist.pipeline.ingestao, e a ingestão não importa este arquivo.
     Por quê: a ingestão não pode depender de servidor, navegador ou da
     extensão ui para rodar.
 
@@ -37,11 +37,11 @@ U5. SAÍDA NA TELA
 
 import sys
 import time
-from pathlib import Path
 
 import duckdb
 
-ARQUIVO_BANCO = Path(__file__).resolve().parent / "olist.duckdb"
+from olist.config import ARQUIVO_BANCO
+
 URL = "http://localhost:4213"
 
 
@@ -51,7 +51,7 @@ def main() -> None:
     # Checar antes de conectar: duckdb.connect criaria um banco vazio.
     if not ARQUIVO_BANCO.is_file():
         print(f"Banco não encontrado: {ARQUIVO_BANCO}")
-        print("Rode a ingestão antes: uv run python -m pipeline.ingestao")
+        print("Rode a ingestão antes: uv run python -m olist.pipeline.ingestao")
         sys.exit(1)
 
     con = duckdb.connect(str(ARQUIVO_BANCO))

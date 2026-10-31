@@ -8,7 +8,7 @@ from decimal import Decimal
 import duckdb
 import pytest
 
-from pipeline import db, transformacao
+from olist.pipeline import db, transformacao
 
 # Uma linha válida por tabela, em texto como chega em raw, na ordem do MAPA.
 # É o pedido p1, entregue, com um item, um pagamento e uma avaliação.
@@ -389,7 +389,7 @@ def test_tabela_faltando_em_raw_encerra_sem_gravar(tmp_path, monkeypatch):
     assert fim.value.code == 1
     texto = lido(saida)
     assert "raw.vendedores" in texto
-    assert "uv run python -m pipeline.ingestao" in texto
+    assert "uv run python -m olist.pipeline.ingestao" in texto
     with duckdb.connect(str(banco)) as con:
         esquemas = con.execute(
             "SELECT count(*) FROM information_schema.schemata WHERE schema_name = 'refined'"

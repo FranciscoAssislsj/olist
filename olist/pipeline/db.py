@@ -1,20 +1,15 @@
 """Acesso ao banco DuckDB do projeto.
 
 Contrato usado pelas etapas do pipeline:
-  PASTA_RAW                          Path da pasta com os nove .csv.gz
-  conectar()                         abre o olist.duckdb, criando se faltar
+  conectar()                         abre o data/olist.duckdb, criando se faltar
   criar_schema(con, nome)            CREATE SCHEMA IF NOT EXISTS
   gravar(con, df, schema, tabela)    grava e devolve a contagem lida do banco
 """
 
-from pathlib import Path
-
 import duckdb
 import pandas as pd
 
-RAIZ = Path(__file__).resolve().parent.parent
-PASTA_RAW = RAIZ / "raw"
-ARQUIVO_BANCO = RAIZ / "olist.duckdb"
+from olist.config import ARQUIVO_BANCO
 
 
 def conectar() -> duckdb.DuckDBPyConnection:

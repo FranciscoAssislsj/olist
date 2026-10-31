@@ -1,4 +1,4 @@
-"""Olist · visão da operação. A spec está em painel.py.
+"""Olist · visão da operação. A spec está em olist/painel.py.
 
 Execução:
     uv run streamlit run app.py
@@ -8,8 +8,8 @@ from datetime import date
 
 import streamlit as st
 
-import painel
-from pipeline import ingestao, marts, transformacao
+from olist import painel
+from olist.pipeline import ingestao, marts, transformacao
 
 MARTS = [
     "kpis",
@@ -23,7 +23,7 @@ MARTS = [
     "nota_por_categoria",
     "vendedores_pareto",
 ]
-COMANDO = "uv run python -m pipeline.marts"
+COMANDO = "uv run python -m olist.pipeline.marts"
 
 
 @st.cache_data

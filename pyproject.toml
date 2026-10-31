@@ -21,12 +21,12 @@ docs = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["test"]
+testpaths = ["tests"]
 pythonpath = ["."]
 
 [tool.coverage.run]
-source = ["."]
-omit = ["test/*", "app.py", "ui.py", ".venv/*"]
+source = ["olist"]
+omit = ["olist/ui.py"]
 
 [tool.coverage.report]
 fail_under = 60

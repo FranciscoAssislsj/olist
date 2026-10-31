@@ -1,21 +1,45 @@
 # Desenvolvimento
 
+## Estrutura de pastas
+
+```text
+olist/
+├── app.py                  # painel Streamlit (entrada, fica na raiz para o deploy)
+├── data/
+│   ├── raw/                # os nove .csv.gz da Olist, versionados
+│   └── olist.duckdb        # banco gerado pelo pipeline, fora do git
+├── olist/                  # pacote Python
+│   ├── config.py           # todos os caminhos do projeto
+│   ├── pipeline/           # db, ingestao, transformacao, marts
+│   ├── painel.py           # leitura dos marts, formatação e gráficos
+│   ├── relatorio.py        # gera reports/relatorio.html
+│   └── ui.py               # DuckDB UI no navegador
+├── sql/marts/              # um .sql por mart: a regra de negócio
+├── reports/                # relatorio.html gerado
+├── tests/                  # pytest
+├── docs/                   # páginas do MkDocs
+├── mkdocs.yml
+└── pyproject.toml
+```
+
+Os caminhos ficam todos em `olist/config.py`; nenhum outro módulo monta caminho a partir de `__file__`. Todo módulo roda com `python -m olist...` a partir da raiz.
+
 ## Testes
 
 ```bash
 uv run pytest --cov
 ```
 
-A cobertura mínima é de 60%, configurada em `pyproject.toml`. `app.py` e `ui.py` ficam fora da conta.
+A cobertura mínima é de 60%, configurada em `pyproject.toml`. A conta mede o pacote `olist/`, menos o `olist/ui.py`; o `app.py` fica fora por estar na raiz.
 
 | Arquivo | Cobre |
 |---|---|
-| `test/test_db.py` | Conexão e gravação no DuckDB |
-| `test/test_ingestao.py` | Ingestão para `raw` |
-| `test/test_transformacao.py` | Tipos, duplicatas e nulos em `refined` |
-| `test/test_marts.py` | Execução dos `.sql`, erros e transação |
-| `test/test_painel.py` | Formatação e gráficos |
-| `test/test_relatorio.py` | Geração do `relatorio.html` |
+| `tests/test_db.py` | Conexão e gravação no DuckDB |
+| `tests/test_ingestao.py` | Ingestão para `raw` |
+| `tests/test_transformacao.py` | Tipos, duplicatas e nulos em `refined` |
+| `tests/test_marts.py` | Execução dos `.sql`, erros e transação |
+| `tests/test_painel.py` | Formatação e gráficos |
+| `tests/test_relatorio.py` | Geração do `reports/relatorio.html` |
 
 ## Lint
 

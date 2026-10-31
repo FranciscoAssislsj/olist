@@ -7,9 +7,9 @@ SPEC (e por que cada regra existe)
 1. LEITURA
    ler(marts) -> dict nome -> DataFrame. Para cada nome, só
    SELECT * FROM marts.<nome>. Nenhuma outra SQL.
-   Conexão com duckdb.connect("olist.duckdb", read_only=True), aberta e
+   Conexão com duckdb.connect("data/olist.duckdb", read_only=True), aberta e
    fechada dentro de ler().
-   Por quê: conexão aberta segura o arquivo, e o pipeline.marts não
+   Por quê: conexão aberta segura o arquivo, e o olist.pipeline.marts não
    consegue gravar com o painel de pé.
 
 2. NENHUM CÁLCULO
@@ -63,8 +63,8 @@ SPEC (e por que cada regra existe)
 
 6. CACHE E ERRO (app.py)
    Leitura com st.cache_data. Um botão "Recarregar dados" limpa o cache.
-   Sem olist.duckdb, ou faltando qualquer mart da lista do item 3: st.error
-   dizendo quais e o comando "uv run python -m pipeline.marts", e st.stop().
+   Sem data/olist.duckdb, ou faltando qualquer mart da lista do item 3: st.error
+   dizendo quais e o comando "uv run python -m olist.pipeline.marts", e st.stop().
    Por quê: o cache evita reler o banco a cada clique; o botão traz os
    marts novos depois de rodar o pipeline sem reiniciar a página.
 
@@ -78,18 +78,17 @@ CRITÉRIOS DE ACEITE
    - Uma busca pelos métodos de agrupar, somar, tirar média e juntar do
      pandas em painel.py e app.py não encontra nada. (Os nomes não aparecem
      aqui de propósito: senão a busca acharia esta própria docstring.)
-   - Com o painel de pé, uv run python -m pipeline.marts roda sem erro de lock.
+   - Com o painel de pé, uv run python -m olist.pipeline.marts roda sem erro de lock.
 """
 
 from datetime import date
-from pathlib import Path
 
 import duckdb
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-ARQUIVO_BANCO = Path(__file__).resolve().parent / "olist.duckdb"
+from olist.config import ARQUIVO_BANCO
 
 COR = "#1f6f50"
 ALTURA_LINHA = 300
