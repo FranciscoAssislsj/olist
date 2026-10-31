@@ -65,6 +65,16 @@ uv run ruff check .
 
 A cobertura mínima é de 60% (configurada em `pyproject.toml`).
 
+## Documentação
+
+A documentação usa [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/), com as páginas em `docs/`:
+
+```bash
+uv run --group docs mkdocs serve   # http://127.0.0.1:8000
+```
+
+A cada push na `main`, o workflow `.github/workflows/docs.yml` publica o site no GitHub Pages.
+
 ## Dados
 
 Os arquivos em `raw/` são o *Brazilian E-Commerce Public Dataset by Olist*, publicado no Kaggle sob a licença [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). São cerca de 100 mil pedidos feitos entre 2016 e 2018.
