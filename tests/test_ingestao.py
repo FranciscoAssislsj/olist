@@ -7,7 +7,7 @@ import sys
 import duckdb
 import pytest
 
-from pipeline import db, ingestao
+from olist.pipeline import db, ingestao
 
 
 def escrever_csv_gz(caminho, texto):

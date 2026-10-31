@@ -4,14 +4,14 @@ Pipeline de dados em Python + DuckDB sobre o [dataset público de e-commerce da 
 
 ```mermaid
 flowchart LR
-    csv["raw/*.csv.gz"] -->|ingestão| raw[(schema raw)]
+    csv["data/raw/*.csv.gz"] -->|ingestão| raw[(schema raw)]
     raw -->|transformação| refined[(schema refined)]
     refined -->|sql/marts/*.sql| marts[(schema marts)]
     marts --> app["app.py<br/>Streamlit"]
-    marts --> html["relatorio.html"]
+    marts --> html["reports/relatorio.html"]
 ```
 
-Tudo mora num arquivo só, o `olist.duckdb`, em três schemas:
+Tudo mora num arquivo só, o `data/olist.duckdb`, em três schemas:
 
 | Schema | O que guarda | Quem escreve |
 |---|---|---|

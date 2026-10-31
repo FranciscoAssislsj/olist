@@ -6,7 +6,7 @@
       "args": [
         "mcp-server-motherduck",
         "--db-path",
-        "olist.duckdb"
+        "data/olist.duckdb"
       ],
       "env": {}
     }

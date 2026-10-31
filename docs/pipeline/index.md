@@ -2,16 +2,15 @@
 
 | Etapa | Comando | Lê | Escreve |
 |---|---|---|---|
-| [1. Ingestão](ingestao.md) | `uv run python -m pipeline.ingestao` | `raw/*.csv.gz` | schema `raw` |
-| [2. Transformação](transformacao.md) | `uv run python -m pipeline.transformacao` | schema `raw` | schema `refined` |
-| [3. Marts](marts.md) | `uv run python -m pipeline.marts` | schema `refined` | schema `marts` |
+| [1. Ingestão](ingestao.md) | `uv run python -m olist.pipeline.ingestao` | `data/raw/*.csv.gz` | schema `raw` |
+| [2. Transformação](transformacao.md) | `uv run python -m olist.pipeline.transformacao` | schema `raw` | schema `refined` |
+| [3. Marts](marts.md) | `uv run python -m olist.pipeline.marts` | schema `refined` | schema `marts` |
 
-O acesso ao banco fica em `pipeline/db.py`:
+Os caminhos (`PASTA_RAW`, `ARQUIVO_BANCO`, `PASTA_MARTS`...) ficam em `olist/config.py`. O acesso ao banco fica em `olist/pipeline/db.py`:
 
 | Função | O que faz |
 |---|---|
-| `PASTA_RAW` | `Path` da pasta com os nove `.csv.gz` |
-| `conectar()` | abre o `olist.duckdb`, criando se faltar |
+| `conectar()` | abre o `data/olist.duckdb`, criando se faltar |
 | `criar_schema(con, nome)` | `CREATE SCHEMA IF NOT EXISTS` |
 | `gravar(con, df, schema, tabela)` | grava com `CREATE OR REPLACE` e devolve a contagem lida do banco |
 

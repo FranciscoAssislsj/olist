@@ -5,7 +5,7 @@ from datetime import date
 import duckdb
 import pandas as pd
 
-import painel
+from olist import painel
 
 # ---------------------------------------------------------------- formato
 

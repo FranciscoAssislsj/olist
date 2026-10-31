@@ -7,8 +7,7 @@ from datetime import datetime
 
 import duckdb
 
-import painel
-import relatorio
+from olist import painel, relatorio
 
 
 def criar_marts(banco, sem=()):
@@ -164,7 +163,7 @@ def test_sem_banco_avisa_e_devolve_1_sem_gerar_arquivo(tmp_path, monkeypatch):
     assert codigo == 1
     assert not saida_html.exists()
     assert not (tmp_path / "nao_existe.duckdb").exists()  # não criou banco vazio
-    assert "uv run python -m pipeline.marts" in lido(saida)
+    assert "uv run python -m olist.pipeline.marts" in lido(saida)
 
 
 def test_mart_faltando_avisa_quais_e_devolve_1(tmp_path, monkeypatch):

@@ -1,7 +1,7 @@
 """Transformação: as oito tabelas usadas pelos marts saem de raw para refined.
 
 Execução:
-    uv run python -m pipeline.transformacao
+    uv run python -m olist.pipeline.transformacao
 
 SPEC (e por que cada regra existe)
 
@@ -83,7 +83,7 @@ REEXECUÇÃO
 
 ERRO
    Antes de transformar, confere se as oito tabelas existem em raw. Faltando
-   qualquer uma: lista quais, manda rodar "uv run python -m pipeline.ingestao"
+   qualquer uma: lista quais, manda rodar "uv run python -m olist.pipeline.ingestao"
    e encerra com sys.exit(1).
    Por quê: transformar sete de oito tabelas em silêncio produz um mart
    errado que parece certo.
@@ -94,7 +94,7 @@ import sys
 
 import duckdb
 
-from pipeline.db import conectar, criar_schema
+from olist.pipeline.db import conectar, criar_schema
 
 ORIGEM = "raw"
 DESTINO = "refined"
@@ -311,7 +311,7 @@ def main() -> None:
             print(f"Tabelas não encontradas no schema {ORIGEM}:")
             for tabela in faltando:
                 print(f"  {ORIGEM}.{tabela}")
-            print('Rode antes: uv run python -m pipeline.ingestao')
+            print('Rode antes: uv run python -m olist.pipeline.ingestao')
             print("Nada foi gravado.")
             sys.exit(1)
 

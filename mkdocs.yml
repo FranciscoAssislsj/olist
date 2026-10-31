@@ -1,5 +1,7 @@
 site_name: Olist · visão da operação
 site_description: Pipeline de dados em Python + DuckDB sobre o dataset público da Olist, com painel Streamlit.
+repo_url: https://github.com/FranciscoAssislsj/olist
+repo_name: FranciscoAssislsj/olist
 docs_dir: docs
 
 theme:

@@ -1,7 +1,7 @@
 # 2. Transformação
 
 ```bash
-uv run python -m pipeline.transformacao
+uv run python -m olist.pipeline.transformacao
 ```
 
 Oito tabelas saem de `raw` para `refined`: `pedidos`, `itens_pedido`, `pagamentos`, `clientes`, `vendedores`, `produtos`, `traducao_categorias` e `avaliacoes`. A `geolocalizacao` fica de fora, porque nenhum mart a lê.

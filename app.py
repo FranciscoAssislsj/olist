@@ -1,4 +1,4 @@
-"""Olist · visão da operação. A spec está em painel.py.
+"""Olist · visão da operação. A spec está em olist/painel.py.
 
 Execução:
     uv run streamlit run app.py
@@ -8,7 +8,8 @@ from datetime import date
 
 import streamlit as st
 
-import painel
+from olist import painel
+from olist.pipeline import ingestao, marts, transformacao
 
 MARTS = [
     "kpis",
@@ -22,7 +23,7 @@ MARTS = [
     "nota_por_categoria",
     "vendedores_pareto",
 ]
-COMANDO = "uv run python -m pipeline.marts"
+COMANDO = "uv run python -m olist.pipeline.marts"
 
 
 @st.cache_data
@@ -30,12 +31,29 @@ def ler() -> dict:
     return painel.ler(MARTS)
 
 
+# O .duckdb não vai para o git; no deploy ele é gerado a partir de raw/.
+# cache_resource roda uma vez por processo, mesmo com várias sessões abrindo
+# juntas, e não guarda o resultado se der erro.
+@st.cache_resource(show_spinner="Preparando os dados (só na primeira abertura)…")
+def gerar_banco() -> None:
+    try:
+        for etapa in (ingestao, transformacao, marts):
+            etapa.main()
+    except SystemExit:
+        # Banco pela metade faria a próxima abertura pular a geração.
+        painel.ARQUIVO_BANCO.unlink(missing_ok=True)
+        raise
+
+
 st.set_page_config(page_title="Olist · visão da operação", layout="wide")
 
 # Checar antes de conectar: em read_only, o connect falharia sem dizer o que fazer.
 if not painel.ARQUIVO_BANCO.is_file():
-    st.error(f"Banco não encontrado: olist.duckdb. Rode: `{COMANDO}`")
-    st.stop()
+    try:
+        gerar_banco()
+    except SystemExit:
+        st.error("Não foi possível gerar o olist.duckdb; veja o log do app.")
+        st.stop()
 
 dados = ler()
 faltando = [nome for nome in MARTS if nome not in dados]

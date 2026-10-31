@@ -1,7 +1,7 @@
 # 3. Marts
 
 ```bash
-uv run python -m pipeline.marts
+uv run python -m olist.pipeline.marts
 ```
 
 Cada arquivo `sql/marts/NN_nome.sql` vira a tabela `marts.nome`:
@@ -17,7 +17,7 @@ O que cada mart responde está no [catálogo de marts](../marts.md).
 ## Adicionar um mart
 
 1. Crie `sql/marts/NN_nome.sql` com um `SELECT`, com o prefixo numérico seguinte.
-2. Rode `uv run python -m pipeline.marts`.
+2. Rode `uv run python -m olist.pipeline.marts`.
 3. A tabela `marts.nome` aparece no banco.
 
 Apagar o arquivo e rodar de novo faz a tabela sumir: o schema `marts` é apagado e recriado a cada execução, para que um mart sem arquivo não continue existindo.

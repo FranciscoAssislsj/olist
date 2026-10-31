@@ -1,18 +1,19 @@
-"""Olist · visão da operação, em um HTML só. A spec está em painel.py.
+"""Olist · visão da operação, em um HTML só (reports/relatorio.html). A spec está
+em olist/painel.py.
 
 Mesmas quatro faixas do app.py, sem filtro: o faturamento mostra o período
 padrão da página, jan/2017 a ago/2018.
 
 Execução:
-    uv run python relatorio.py
+    uv run python -m olist.relatorio
 """
 
 import sys
 from datetime import date, datetime
 from html import escape
-from pathlib import Path
 
-import painel
+from olist import painel
+from olist.config import PASTA_REPORTS
 
 MARTS = [
     "kpis",
@@ -26,8 +27,8 @@ MARTS = [
     "nota_por_categoria",
     "vendedores_pareto",
 ]
-COMANDO = "uv run python -m pipeline.marts"
-ARQUIVO = Path(__file__).resolve().parent / "relatorio.html"
+COMANDO = "uv run python -m olist.pipeline.marts"
+ARQUIVO = PASTA_REPORTS / "relatorio.html"
 INICIO, FIM = date(2017, 1, 1), date(2018, 8, 1)
 
 ESTILO = """
@@ -50,7 +51,7 @@ def main() -> int:
 
     # Checar antes de conectar: em read_only, o connect falharia sem dizer o que fazer.
     if not painel.ARQUIVO_BANCO.is_file():
-        print(f"Banco não encontrado: olist.duckdb. Rode: {COMANDO}")
+        print(f"Banco não encontrado: data/olist.duckdb. Rode: {COMANDO}")
         return 1
     dados = painel.ler(MARTS)
     faltando = [nome for nome in MARTS if nome not in dados]
@@ -148,6 +149,7 @@ def main() -> int:
 </body>
 </html>
 """
+    ARQUIVO.parent.mkdir(parents=True, exist_ok=True)
     ARQUIVO.write_text(html, encoding="utf-8")
     print(f"{ARQUIVO} · {ARQUIVO.stat().st_size / 1024:.1f} KB")
     return 0
