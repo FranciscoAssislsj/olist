@@ -1,0 +1,70 @@
+site_name: Olist · visão da operação
+site_description: Pipeline de dados em Python + DuckDB sobre o dataset público da Olist, com painel Streamlit.
+docs_dir: docs
+
+theme:
+  name: material
+  language: pt-BR
+  icon:
+    logo: material/database
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Mudar para o tema escuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Mudar para o tema claro
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+
+nav:
+  - Início: index.md
+  - Como rodar: como-rodar.md
+  - Pipeline:
+      - Visão geral: pipeline/index.md
+      - 1. Ingestão: pipeline/ingestao.md
+      - 2. Transformação: pipeline/transformacao.md
+      - 3. Marts: pipeline/marts.md
+  - Catálogo de marts: marts.md
+  - Painel e relatório: painel.md
+  - Desenvolvimento: desenvolvimento.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      # Raiz do projeto: as páginas incluem os .sql direto de sql/marts/.
+      base_path: ["."]
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
