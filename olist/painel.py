@@ -114,7 +114,13 @@ MESES = (
 def ler(marts: list[str]) -> dict[str, pd.DataFrame]:
     """Lê cada mart que existir. Um mart ausente fica fora do dict."""
     dados = {}
-    con = duckdb.connect(str(ARQUIVO_BANCO), read_only=True)
+    # Sem replacement scans: um mart ausente com o nome de uma função deste
+    # módulo (ex.: mix_pagamento) viraria InvalidInputException, não CatalogException.
+    con = duckdb.connect(
+        str(ARQUIVO_BANCO),
+        read_only=True,
+        config={"python_enable_replacements": False},
+    )
     try:
         for nome in marts:
             try:

@@ -68,6 +68,17 @@ def test_ler_devolve_os_marts_que_existem_e_ignora_os_ausentes(tmp_path, monkeyp
     assert dados["kpis"].to_dict("list") == {"n": [1, 2], "s": ["a", "b"]}
 
 
+def test_ler_ignora_mart_ausente_com_nome_de_funcao_do_painel(tmp_path, monkeypatch):
+    banco = tmp_path / "t.duckdb"
+    with duckdb.connect(str(banco)) as con:
+        con.execute("CREATE SCHEMA marts")
+    monkeypatch.setattr(painel, "ARQUIVO_BANCO", banco)
+
+    # Sem a tabela, o DuckDB procuraria a função painel.mix_pagamento como
+    # se fosse um DataFrame (replacement scan) e estouraria InvalidInputException.
+    assert painel.ler(["mix_pagamento"]) == {}
+
+
 def test_ler_fecha_a_conexao_e_libera_o_banco_para_escrita(tmp_path, monkeypatch):
     banco = tmp_path / "t.duckdb"
     with duckdb.connect(str(banco)) as con:
