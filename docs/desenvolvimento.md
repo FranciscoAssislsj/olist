@@ -23,6 +23,18 @@ A cobertura mínima é de 60%, configurada em `pyproject.toml`. `app.py` e `ui.p
 uv run ruff check .
 ```
 
+## Pre-commit
+
+O `.pre-commit-config.yaml` roda, a cada commit, verificações de espaços, fim de arquivo, YAML/TOML, conflitos de merge e arquivos grandes, além do `ruff check --fix` e do `uv lock --check`. O ruff vem do ambiente do projeto, na mesma versão do CI.
+
+```bash
+# Instala o hook no .git (uma vez por clone)
+uv run pre-commit install
+
+# Roda todos os hooks em todos os arquivos
+uv run pre-commit run --all-files
+```
+
 ## Documentação
 
 Esta documentação usa [MkDocs](https://www.mkdocs.org/) com o tema [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/). As páginas ficam em `docs/` e a configuração em `mkdocs.yml`.
