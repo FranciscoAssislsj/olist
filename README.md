@@ -2,6 +2,9 @@
 
 Pipeline de dados em Python + DuckDB sobre o [dataset público de e-commerce da Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce), terminando em um painel Streamlit e em um relatório HTML estático.
 
+- **Painel:** https://olist-dash.streamlit.app/
+- **Documentação:** https://franciscoassislsj.github.io/olist/
+
 ```
 data/raw/*.csv.gz ──► raw ──► refined ──► marts ──► painel (Streamlit) / reports/relatorio.html
                   ingestão  transformação  sql/marts/*.sql
@@ -95,13 +98,11 @@ uv run pre-commit install
 
 ## Documentação
 
-A documentação usa [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/), com as páginas em `docs/`:
+Publicada em https://franciscoassislsj.github.io/olist/ a cada push na `main`. Para editar as páginas em `docs/` com pré-visualização local:
 
 ```bash
 uv run --group docs mkdocs serve   # http://127.0.0.1:8000
 ```
-
-A cada push na `main`, o job `deploy` do workflow `.github/workflows/ci.yml` publica o site no GitHub Pages, depois que lint, testes e build da documentação passam.
 
 ## Dados
 

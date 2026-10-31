@@ -1,6 +1,6 @@
 # Painel e relatório
 
-O painel tem duas saídas, com as mesmas funções de gráfico:
+O painel está publicado em <https://olist-dash.streamlit.app/> e tem duas saídas, com as mesmas funções de gráfico:
 
 | Arquivo | Saída | Comando |
 |---|---|---|
