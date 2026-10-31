@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Ambiente virtual (uv)
+.venv/
+venv/
+
+# Banco DuckDB: gerado pelo pipeline e maior que o limite de 100 MB do GitHub
+*.duckdb
+*.duckdb.wal
+*.duckdb.tmp/
+
+# Testes e cobertura
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Lint
+.ruff_cache/
+
+# Variáveis de ambiente
+.env
+.env.*
+
+# Streamlit (segredos locais)
+.streamlit/secrets.toml
+
+# Editores e sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
